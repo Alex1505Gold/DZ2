@@ -87,7 +87,7 @@ int main()
 		}
 		if (count_it[i] == ' ') count_it.erase(i, 1);
 		if (count_it[i] == '-' && (i == 0 || (!(isdigit(count_it[i - 1])) && count_it[i - 1] != ')'
-			&& count_it[i - 1] != 'p' && count_it[i] != 'e')))
+			&& count_it[i - 1] != 'p' && count_it[i - 1] != 'E')))
 		{
 			count_it.insert(i, "0");
 		}
@@ -107,12 +107,12 @@ int main()
 			if (i != (count_it.length() - 1) && !isalpha(count_it[i + 1]) && !isdigit(count_it[i + 1]) && count_it[i + 1] != '(')
 			{
 
-				std::cout << "Inavalid input1";
+				std::cout << "Inavalid input";
 				return 0;
 			}
 			if (i != 0 && !(isoper(count_it[i - 1]) || isalpha(count_it[i - 1]) || count_it[i - 1] == '('))
 			{
-				std::cout << "Inavalid input2";
+				std::cout << "Inavalid input";
 				return 0;
 			}
 			left++;
@@ -121,12 +121,12 @@ int main()
 		{
 			if (i != (count_it.length() - 1) && !isoper(count_it[i + 1]) && count_it[i + 1] != ')')
 			{
-				std::cout << "Inavalid input3";
+				std::cout << "Inavalid input";
 				return 0;
 			}
 			if (i != 0 && !isdigit(count_it[i - 1]) && count_it[i - 1] != ')')
 			{
-				std::cout << "Inavalid input4";
+				std::cout << "Inavalid input";
 				return 0;
 			}
 			right++;
@@ -163,12 +163,12 @@ int main()
 			}
 			else if (count_it[i + 3] != '(')
 			{
-				std::cout << "Invalid input5";
+				std::cout << "Invalid input";
 				return 0;
 			}
 			else if (i != 0 && !isoper(count_it[i - 1]) && count_it[i - 1] != '(')
 			{
-				std::cout << "Invalid input6";
+				std::cout << "Invalid input";
 				return 0;
 			}
 			i += 2;
@@ -178,13 +178,13 @@ int main()
 			if (i != (count_it.length() - 1) && !(isdigit(count_it[i + 1]) || count_it[i + 1] == '.' ||
 				isoper(count_it[i + 1]) || count_it[i + 1] == ')'))
 			{
-				std::cout << "Invalid input7";
+				std::cout << "Invalid input";
 				return 0;
 			}
 			else if (i != 0 && !(isdigit(count_it[i - 1]) || count_it[i - 1] == '.' ||
 				isoper(count_it[i - 1]) || count_it[i - 1] == '('))
 			{
-				std::cout << "Invalid input8";
+				std::cout << "Invalid input";
 				return 0;
 			}
 		}
@@ -192,12 +192,12 @@ int main()
 		{
 			if (i == 0 || i == (count_it.length() - 1))
 			{
-				std::cout << "Invalid input9";
+				std::cout << "Invalid input";
 				return 0;
 			}
 			if (isoper(count_it[i + 1]) || isoper(count_it[i - 1]))
 			{
-				std::cout << "Invalid input1o";
+				std::cout << "Invalid input";
 				return 0;
 			}
 		}
