@@ -343,7 +343,14 @@ int main()
 				if (part == "ctg")
 					st_OPZ.push(std::to_string(1 / tan(a)));
 				if (part == "sqr")
+				{
+					if (a < 0)
+					{
+						std::cout << "sqrt from negative value cannot be taken";
+						return 0;
+					}
 					st_OPZ.push(std::to_string(sqrt(a)));
+				}
 				if (part == "exp")
 					st_OPZ.push(std::to_string(pow(e, a)));
 			}
@@ -366,7 +373,14 @@ int main()
 				if (part[0] == '*')
 					st_OPZ.push(std::to_string(b * a));
 				if (part[0] == '/')
+				{
+					if (a == 0)
+					{
+						std::cout << "division by zero is not defined";
+						return 0;
+					}
 					st_OPZ.push(std::to_string(b / a));
+				}
 				if (part[0] == '^')
 					st_OPZ.push(std::to_string(pow(b, a)));
 			}
