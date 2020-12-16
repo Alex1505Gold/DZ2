@@ -53,8 +53,8 @@ bool isfunc(std::string s)
 	return !(strcmp(c, "cos") && strcmp(c, "sin") && strcmp(c, "tan") && strcmp(c, "ctg") && strcmp(c, "sqr") && strcmp(c, "exp"));
 }
 
-const double pi = 3.14159;
-const double e = 2.71828;
+const double pi = 3.14159265;
+const double e = 2.718281828;
 
 int main()
 {
@@ -64,30 +64,28 @@ int main()
 	double a, b;
 	std::string count_it;
 	std::getline(std::cin, count_it);
+	
 	//обработка строки и возможных ошибок перед использованием ОПЗ
 	int dots = 0;
 	bool f = 0;
-	std::string x;
+	double x = 0;
 	for (int i = 0; i < count_it.length(); ++i)
 	{
-		if (count_it[i] == 'x')
+		if (static_cast<int>(count_it[i]) > 255 || static_cast<int>(count_it[i]) < 0)
 		{
-			if (!f)
-			{
-				std::cout << "Insert x\n";
-				std::cin >> x;
-				f = 1;
-			}
-			count_it.erase(i, 1);
-			count_it.insert(i, x);
+			std::cout << "Unexpected_symbol";
+			return 0;
 		}
 		if (count_it[i] == 'i' && i != 0)
 		{
 			if (count_it[i - 1] == 'p') count_it.erase(i, 1);
 		}
-		if (count_it[i] == ' ') count_it.erase(i, 1);
+		if (count_it[i] == ' ')
+		{
+			count_it.erase(i, 1);
+		}
 		if (count_it[i] == '-' && (i == 0 || (!(isdigit(count_it[i - 1])) && count_it[i - 1] != ')'
-			&& count_it[i - 1] != 'p' && count_it[i - 1] != 'E')))
+			&& count_it[i - 1] != 'p' && count_it[i - 1] != 'E' && count_it[i - 1] != 'x')))
 		{
 			count_it.insert(i, "0");
 		}
@@ -102,17 +100,27 @@ int main()
 	int right = 0;
 	for (int i = 0; i < count_it.length(); ++i)
 	{
+		if (count_it[i] == 'x')
+		{
+			if (!f)
+			{
+				std::cout << "Default x is 0\n";
+				std::cout << "Insert x\n";
+				std::cin >> x;
+				f = 1;
+			}
+		}
 		if (count_it[i] == '(')
 		{
 			if (i != (count_it.length() - 1) && !isalpha(count_it[i + 1]) && !isdigit(count_it[i + 1]) && count_it[i + 1] != '(')
 			{
 
-				std::cout << "Inavalid input";
+				std::cout << "Inavalid input1";
 				return 0;
 			}
 			if (i != 0 && !(isoper(count_it[i - 1]) || isalpha(count_it[i - 1]) || count_it[i - 1] == '('))
 			{
-				std::cout << "Inavalid input";
+				std::cout << "Inavalid input2";
 				return 0;
 			}
 			left++;
@@ -121,12 +129,13 @@ int main()
 		{
 			if (i != (count_it.length() - 1) && !isoper(count_it[i + 1]) && count_it[i + 1] != ')')
 			{
-				std::cout << "Inavalid input";
+				std::cout << "Inavalid input3";
 				return 0;
 			}
-			if (i != 0 && !isdigit(count_it[i - 1]) && count_it[i - 1] != ')')
+			if (i != 0 && !isdigit(count_it[i - 1]) && count_it[i - 1] != ')' 
+				&& !(count_it[i - 1] == 'E' || count_it[i - 1] == 'p' || count_it[i - 1] == 'x'))
 			{
-				std::cout << "Inavalid input";
+				std::cout << "Inavalid input4";
 				return 0;
 			}
 			right++;
@@ -149,6 +158,16 @@ int main()
 		{
 			if (count_it[i] == 'E' || count_it[i] == 'p' || count_it[i] == 'x')
 			{
+				if (i != 0 && !(isoper(count_it[i - 1]) || count_it[i - 1] == '('))
+				{
+					std::cout << "Do not skip operators";
+					return 0;
+				}
+				if (i != (count_it.length() - 1) && !(isoper(count_it[i + 1]) || count_it[i + 1] == ')'))
+				{
+					std::cout << "Do not skip operators";
+					return 0;
+				}
 				i -= 2;
 			}
 			else if (i >= count_it.length() - 5)
@@ -163,12 +182,12 @@ int main()
 			}
 			else if (count_it[i + 3] != '(')
 			{
-				std::cout << "Invalid input";
+				std::cout << "Invalid input5";
 				return 0;
 			}
 			else if (i != 0 && !isoper(count_it[i - 1]) && count_it[i - 1] != '(')
 			{
-				std::cout << "Invalid input";
+				std::cout << "Invalid input6";
 				return 0;
 			}
 			i += 2;
@@ -178,13 +197,13 @@ int main()
 			if (i != (count_it.length() - 1) && !(isdigit(count_it[i + 1]) || count_it[i + 1] == '.' ||
 				isoper(count_it[i + 1]) || count_it[i + 1] == ')'))
 			{
-				std::cout << "Invalid input";
+				std::cout << "Invalid input7";
 				return 0;
 			}
 			else if (i != 0 && !(isdigit(count_it[i - 1]) || count_it[i - 1] == '.' ||
 				isoper(count_it[i - 1]) || count_it[i - 1] == '('))
 			{
-				std::cout << "Invalid input";
+				std::cout << "Invalid input8";
 				return 0;
 			}
 		}
@@ -192,12 +211,12 @@ int main()
 		{
 			if (i == 0 || i == (count_it.length() - 1))
 			{
-				std::cout << "Invalid input";
+				std::cout << "Invalid input9";
 				return 0;
 			}
 			if (isoper(count_it[i + 1]) || isoper(count_it[i - 1]))
 			{
-				std::cout << "Invalid input";
+				std::cout << "Invalid input10";
 				return 0;
 			}
 		}
@@ -232,7 +251,7 @@ int main()
 	std::stack<std::string> st_OPZ;
 	for (int i = 0; i < count_it.length(); ++i)
 	{
-		if (isdigit(count_it[i]) || count_it[i] == 'p' || count_it[i] == 'E' || count_it[i] == '.')
+		if (isdigit(count_it[i]) || count_it[i] == 'p' || count_it[i] == 'E' || count_it[i] == '.' || count_it[i] == 'x')
 		{
 			in += count_it[i];
 			//std::cout << in << std::endl;
@@ -319,6 +338,10 @@ int main()
 			else if (part[0] == 'p')
 			{
 				st_OPZ.push(std::to_string(pi));
+			}
+			else if (part[0] == 'x')
+			{
+				st_OPZ.push(std::to_string(x));
 			}
 			else
 			{
