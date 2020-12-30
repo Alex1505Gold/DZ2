@@ -53,11 +53,11 @@ bool isfunc(std::string s)
 	return !(strcmp(c, "cos") && strcmp(c, "sin") && strcmp(c, "tan") && strcmp(c, "ctg") && strcmp(c, "sqr") && strcmp(c, "exp"));
 }
 
-const double pi = 3.14159265;
-const double e = 2.718281828;
 
 int main()
 {
+	const double pi = 3.14159265;
+	const double e = 2.718281828;
 	std::cout << "List of operators:\ncos, sin, tan, ctg, sqr, exp\n+, -, *, /, ^\n";
 	std::cout << "Consts: pi and e\n";
 	std::cout << "Write fractions with dots\n";
@@ -85,7 +85,7 @@ int main()
 			count_it.erase(i, 1);
 		}
 		if (count_it[i] == '-' && (i == 0 || (!(isdigit(count_it[i - 1])) && count_it[i - 1] != ')'
-			&& count_it[i - 1] != 'p' && count_it[i - 1] != 'E' && count_it[i - 1] != 'x')))
+			&& count_it[i - 1] != 'p' && count_it[i - 1] != 'E' && count_it[i - 1] != 'x' && !isoper(count_it[i - 1]))))
 		{
 			count_it.insert(i, "0");
 		}
@@ -242,7 +242,7 @@ int main()
 		std::cout << "Not enough brackets" << std::endl;
 		return 0;
 	}
-	//std::cout << count_it;
+	//std::cout << count_it << std::endl;
 	//начало основной части программы
 	std::string in;
 	std::string part = "";
@@ -305,6 +305,7 @@ int main()
 						in += st_OPZ.top();
 						in += " ";
 						st_OPZ.pop();
+						if (!st_OPZ.empty()) part = st_OPZ.top();
 					}
 					part = "";
 					part += count_it[i];
